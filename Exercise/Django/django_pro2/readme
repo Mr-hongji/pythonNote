@@ -1,0 +1,71 @@
+模板（templates ）使用：
+
+
+Django 模板：
+    * pro1 中使用 django.http.HttpResponse() 来输出 "Hello World！"。
+      该方式将数据与视图混合在一起，不符合 Django 的 MVC 思想。
+
+    * 模板是一个文本，用于分离文档的表现形式和内容。
+
+
+模板语法：
+
+    * if else: 支持嵌套
+
+        {% if athlete_list and coach_list %}
+            ... display 1
+        {% elif condition2 %}
+            ... display 2
+        {% else %}
+            ... display 3
+        {% endif %}
+
+
+    * for:支持嵌套
+
+        <ul>
+            {% for athlete in athlete_list %}
+                <li>{{ athlete.name }}</li>
+            {% endfor %}
+        </ul>
+
+
+    * reversed: 反向迭代列表
+
+        {% for athlete in athlete_list reversed %}
+            ...
+        {% endfor %}
+
+
+    * ifequal（如果相等） / ifnotequal（如果不相等）：比较两个值
+
+        {% ifequal user currentuser %}
+            <h1>Welcome!</h1>
+        {% endifequal %}
+
+        -------*------- 支持可选的 {% else%} 标签 -------*-------
+
+        {% ifequal section 'sitenews' %}
+            <h1>Site News</h1>
+        {% else %}
+            <h1>No News Here</h1>
+        {% endifequal %}
+
+
+    * include 标签： {% include %} 允许在模板中包含其它的模板的内容：
+
+        {% include "nav.html" %}
+
+
+    * {% block %} 模板继承, 示例： base.html
+
+        {% block mainbody %}  # 一个名为mainbody的block标签：
+            <p>original</p>
+        {% endblock %}
+
+
+
+    * 注释 {# #}:
+
+        {# 这是一个注释 #}
+

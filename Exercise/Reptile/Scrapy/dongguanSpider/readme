@@ -1,0 +1,15 @@
+知识点：
+
+    使用  CrawlSpider 类获取并跟踪 页面中的 url 地址，并获取页面信息
+
+    相对 Spider 类，需要使用如下代码：
+
+        linkEx1 = LinkExtractor(allow=(r'/\d+/\d+.shtml'))
+
+        rules = (
+            Rule(linkEx, follow = True),
+            Rule(linkEx1, follow = True, callback = 'dongguanParse')
+        )
+
+
+    LOG 日志打印

@@ -1,0 +1,32 @@
+
+MVC / MVT
+
+models.py : 模型。 用于操作数据库         M
+views.py : 视图。用于处理页面数据显示     V
+urls.py : 控制器。用于访问url的分发       C
+
+templates/html ： 模板。存放 html 页面    T
+
+
+内容：
+
+    1. HttpResponse, render 的使用
+    2. urls 使用
+
+            分组：
+                 url(r'^artical/(\d{4})/(\d{2})$', artical)
+            分组起别名：
+                # 使用别名的方式后，views的处理函数中的参数名必须是 此处使用的别名
+                url(r'^artical/(?P<year>\d{4})/(?P<month>\d{2})$', artical_year_month)
+
+            访问路径起别名：
+                url(r'^register/$', register, name='reg')
+                {% load staticfiles %}
+                <form action="{% url 'reg' %}" method="post">
+
+    3. static 方式引入文件
+            {% load staticfiles %}
+            <script src="{% static 'jquery-3.1.1.js' %}"></script>
+
+    4. form 表单使用post提交时会出现安全错误：
+            注掉 settings.py 中的 #'django.middleware.csrf.CsrfViewMiddleware'

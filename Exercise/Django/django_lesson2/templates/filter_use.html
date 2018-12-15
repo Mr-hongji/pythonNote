@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 使用自定义过滤器和标签是要 加载自定义过滤器的 py 文件 -->
+    {% load  mytag %}
+
+</head>
+<body>
+
+
+<!-- 更多标签和过滤器 参考 文档 https://django-chinese-docs-16.readthedocs.io/en/latest/ref/templates/builtins.html -->
+
+
+<!-- 首字母大写-->
+    {{ name|capfirst }}<br>
+
+<!-- 相加 -->
+    {{ age|add:10 }}<br>
+
+    {{ atag }}<br>
+
+<!-- 使用safe 和 使用 autoescape off 效果一样，两种方式都可以-->
+   {{ atag|safe }}<br>
+
+<!-- off 时候页面直接显示正常和连接形式  -->
+    {% autoescape off %}
+        {{ atag }} <br>
+<!-- on 时候带HTML标签的数据会原样输出字符串 <a href="">点一下</a> -->
+        {% autoescape on %}
+             {{ atag }}
+        {% endautoescape %}
+    {% endautoescape %}
+    <br>
+
+
+
+{# 使用 mark_safe()方法 和使用safe 和 使用 autoescape off 效果一样 #}
+{# safetag = mark_safe("<a href='{%url equip:listEquipmentCategory 1 %}'>首页</a>") #}
+
+    {{ safetag }}<br><br>
+
+
+
+<!-- for循环  -->
+{# for...empty标签：for 标签带有一个可选的{% empty %} 从句，以便在给出的组是空的或者没有被找到时，可以有所操作。#}
+    {% for hby in hobby %}
+        <p>{{ hby }}</p>
+    {% empty %}
+        <h1>没有爱好</h1>
+    {% endfor %}
+
+
+<!-- if -->
+    {% if age < 15 %}
+        <p>age < 15</p>
+    {% elif age > 15 %}
+        <p>age > 15</p>
+    {% endif %}
+
+<br><br>
+
+
+<!-- 使用 verbatim 原样输出 大括号 {# {{ nihao }} #} -->
+    {% verbatim %}
+        {{ nihao }}
+    {% endverbatim %}
+
+<br><br>
+
+
+    {{ age}}
+    {{ age|multi:2 }}
+
+<!-- 使用自定义过滤器 （add_1）  传参只能传一个 可以用在（if 和 for 等）控制语句中-->
+    {{ age|add_1:l}}
+
+<br><br>
+
+
+<!-- 使用自定义标签  可以传多个参数  不可以用在控制语句中-->
+
+    {% simple_tag_multi 1 2 3 %}
+    {% simple_tag_multi age 2 3 %}
+
+</body>
+</html>

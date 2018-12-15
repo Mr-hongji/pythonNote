@@ -1,0 +1,49 @@
+1、views.py 的 render中使用 locals()方法，向模板传递所有局部变量
+
+2、使用 redirect 来做 url 跳转：
+    redirect('login.html',{'uname':uname, 'pwd':pwd})
+
+3、模板中输出变量使用 {{变量名}} （.的使用）
+
+4、控制语句
+    {% for %}{% endfor %} 等
+
+5、过滤器 （内置、自定义）和 自定义标签的使用
+    {% load  mytag %} 引入含有自定义过滤器的 py 文件
+
+6、页面继承 {% extends 'base.html' %}
+
+7、页面复用重写
+    {% block main_right %}
+        <h1>Welcome Student Manager System</h1>
+    {% endblock %}
+
+8、
+   urls中路由路径对应处理函数  FBV ===> FUNCTION BASE VIEWS (一个路由对应一个views中的function)
+   urls中路由路径对应处理类    CBV ===> CLASS BASE VIEWS (一个路由对应一个views中的class)
+
+   FBV:
+        urls路由中：
+            url(r'^FBV$', fbv)
+
+         views中对应的function：
+             def fbv(request):
+                 return  HttpResponse('FBV')
+
+
+   CBV:
+        urls路由中：
+            url(r'^CBV$', cbv.as_view())
+
+        views中对应的class（要继承View类）:
+
+               from django.views import View
+                class cbv(View):
+                    def get(self, request):
+                        return render(request, 'CBV.html', {'method':'CBV.GET'})
+
+                    def post(self, request):
+                        return render(request, 'CBV.html', {'method': 'CBV.POST'})
+
+
+

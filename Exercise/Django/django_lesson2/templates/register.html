@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{% url 'login' %}" method="post">
+        username：<input type="text" name="uname"><br>
+        password：<input type="password" name="pwd"><br>
+        email: <input type="text"><br>
+        <input type="submit">
+        {# 表单提交使用post时，会出现CSRF verification failed. Request aborted.安全问题的解决 #}
+        {% csrf_token %}
+    </form>
+</body>
+</html>

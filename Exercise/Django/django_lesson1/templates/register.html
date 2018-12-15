@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{#    <form action="/register/" method="post"> 使用别名方式#}
+    <form action="{% url 'reg' %}" method="post">
+        <p>用户名：<input type="text" name="uname"></p>
+        <p>密码：<input type="password" name="pwd"></p>
+        <p>爱好：
+            <input type="checkbox" name="hobay" value="1">养花
+            <input type="checkbox" name="hobay" value="2">养草
+            <input type="checkbox" name="hobay" value="3">养鱼
+            <input type="checkbox" name="hobay" value="4">种菜
+        </p>
+        <input type="submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/*
+
+    MongoDB:
+
+        * 是一个NoSQL数据库。
+        * 是一个基于分布式文件存储（面向文档）的数据库。
+        * 由 C++ 语言编写,旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。
+        * 在高负载的情况下，添加更多的节点，可以保证服务器性能。
+        * 将数据存储为一个文档，数据结构由键值(key=>value)对组成。
+        * MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组及文档数组。
+
+        如：
+            {
+                name: "sue",
+                age: "26",
+                status: "A",
+                groups: "['news', 'sports']"
+            }
+
+
+        关系数据库（RDBMS）具有典型的架构设计，可以显示表的数量以及这些表之间的关系，
+    而在MongoDB中则没有关系的概念。
+
+
+    MongoDB 应用场景：
+
+        * 大而复杂的数据
+        * 移动和社会基础设施数据
+        * 内容管理和交付
+        * 用户数据管理
+        * 数据中心
+
+
+
+    特点：
+
+        * 操作简单容易。 面向文档存储的数据库
+        * 扩展性强。 可以通过本地或网络创建数据库镜像
+        * 支持丰富的查询表达式。 可以通过字段，范围查询进行搜索，并且还支持正则表达式搜索
+
+
+
+
+    NoSQL(Not Only SQL的缩写):
+
+        * 是非关系型的数据库。
+        * 用于超大规模数据的存储。
+
+
+
+
+
+    安装：
+
+        参考：https://blog.csdn.net/Artful_Dodger/article/details/80844844
+
+        MongoDB将数据目录存储在 db 目录下。但是这个数据目录不会主动创建，
+        我们在安装完成后需要创建它。如：
+        D:\ProgramFiles\MongoDB\Server\4.0\data\db
+
+
+        然后创建log目录：
+        D:\ProgramFiles\MongoDB\Server\4.0\data\logs\  目录下创建 mongo.log 文件
+
+
+        安装完成后进入 bin 目录（D:\ProgramFiles\MongoDB\Server\4.0\bin）下，
+        按 'Shift' 键，在目录中右键，会有一个 '在此处打开命令行窗口'选项，点开后命令行
+        会自动进入 bin 目录下，
+        执行：'mongod --dbpath D:\ProgramFiles\MongoDB\Server\4.0\data\db' 命令
+
+        启动 MongoDB 服务。
+
+        测试服务是否启动正常：浏览器打开 http://localhost:27017
+
+        看到：It looks like you are trying to access MongoDB over HTTP on the native driver port. 服务启动成功
+
+
+     在计算机管理的服务中配置 MongoDB 服务：
+
+        前面都是通过进入bin目录，使用 命令行启动服务，每次这么启动，太麻烦，所以配置一个 服务选项。
+
+        没有配置前，服务列表中没有 MongoDB 服务
+
+
+        进入bin目录执行下面命令后列表中会出现 MongoDB 服务：
+
+
+            mongod --bind_ip 0.0.0.0 --logpath D:\Pro
+            gramFiles\MongoDB\Server\4.0\log\mongo.log --logappend --dbpath D:\ProgramFiles\
+            MongoDB\Server\4.0\data\db --port 27017 --serviceName "MongoDB" --serviceDisplay
+            Name "MongoDB" --install
+
+
+
+
+
+*/

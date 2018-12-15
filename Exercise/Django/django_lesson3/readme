@@ -1,0 +1,20 @@
+Model操作：
+
+    Django 中的 Model 通过类来映射数据库中的表
+
+    一、sqlite 数据表创建以及表结构查看
+
+    二、MySQL 数据库和表创建：
+        1、 在models.py 文件中新建类 Book，类名 Book 被映射为表名 （表名是 app的名字_类名）
+        2、 类 Book 中的属性就是表中的字段
+        3、 进入MySQL 创建数据库
+        4、 创建完成后依次执行命令：
+            * python manage.py makemigrations （让 Django 知道我们在我们的模型有一些变更）
+            * python manage.py migrate （创建表结构）
+
+
+    三、MySQL 单表的数据 增-删-改-查 操作
+
+    四、在 setting.py 文件中添加 logging 可以查看 Django 实际执行的原生 SQL 语句
+
+

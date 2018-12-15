@@ -1,0 +1,17 @@
+Django模型（Model）：
+
+    * Django 对各种数据库提供了很好的支持，包括：PostgreSQL、MySQL、SQLite、Oracle。
+    * Django 为这些数据库提供了统一的调用API。 我们可以根据自己业务需求选择不同的数据库。
+
+
+创建模块命令：
+
+    * django-admin startapp  模块名称
+    * 或 python manage.py startapp 模块名称
+
+
+
+1、创建数据库 Test
+2、python manage.py migrate   # 创建表结构
+3、python manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更
+4、python manage.py migrate TestModel   # 创建表结构

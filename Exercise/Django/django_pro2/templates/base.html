@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+    <p>block 标签测试 </p>
+
+    <!--
+        名为 mainbody 的 block 标签是可以被继承者们替换（重载）掉的部分
+
+
+        在 hello_extends_base.html 中引用 base.html 并重载这部分内容
+    -->
+
+    {% block mainbody %}
+       <p>original</p>
+    {% endblock %}
+
+
+</body>
+</html>
