@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="dispatchteacher?classid={{ classid }}" method="post">
+
+    <select multiple size="10" name="teachers">
+    {% for teacher in teacher_list %}
+        {% if teacher in cls_teachets %}
+            <option value="{{ teacher.id }}" selected>{{ teacher.name }}</option>
+        {% else %}
+            <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+<input type="submit">
+{% csrf_token %}
+</form>
+</body>
+</html>

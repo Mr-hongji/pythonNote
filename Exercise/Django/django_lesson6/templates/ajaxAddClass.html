@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./static/jquery-3.1.1.js"></script>
+</head>
+<body>
+<p id="errortip"></p>
+<input type="text" id="classname">
+<button onclick="addClass()" >添加</button>
+
+<script>
+    function addClass()
+    {
+       var clsname = $('#classname').val();
+       $.ajax(
+           {
+               url:'ajax_addclass',
+               type:'POST',
+               data:{name:clsname},
+               success:function(arg){
+                    if(arg=='success')
+                    {
+                        window.location = 'classes.html';
+                    }
+                    else
+                    {
+                        $("#errortip").css("color","red");
+                        $('#errortip').append(arg);
+                    }
+
+               }
+           }
+       );
+    }
+</script>
+</body>
+</html>

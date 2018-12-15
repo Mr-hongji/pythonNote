@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery-3.1.1.js"></script>
+</head>
+<body>
+
+<p>
+    <a href="/add_student.html">添加</a>
+</p>
+<p>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+            <th>gender</th>
+            <th>age</th>
+            <th>cls</th>
+            <th>option</th>
+        </tr>
+        <tbody>
+            {% for item in stu_list %}
+                <tr id="{{ item.id  }}">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        {% if item.gender %}
+                            女
+                        {% else %}
+                            男
+                        {% endif %}
+
+                    </td>
+                    <td>{{ item.age }}</td>
+                    <td>{{ item.c.name }}</td>
+                    <td>
+                        <a href="deleteStudent.html?sid={{ item.id }}">删除</a>
+                        |
+                        <a href="javascript:void(0)" onclick="ajaxDeleteStudent({{ item.id }})">Ajax删除</a>
+                        |
+                        <a href="update_Student.html?sid={{ item.id }}">修改</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</p>
+
+
+
+<script>
+    function ajaxDeleteStudent(id){
+        $.ajax(
+            {
+                url:'ajaxDeleteStudent',
+                type:'post',
+                data:{id:id},
+                success:function (arg) {
+                    var resData = JSON.parse(arg);
+                    if(resData.resultMsg > 0){
+                        //删除成功后有两种更新页面数据的方式
+
+                         // 方式一：删除成功后删除表格中的一行数据，不用刷新页面
+                        document.getElementById(id).remove();
+
+                        // 方式二： 删除成功后重新加载页面，这种方式会刷新页面
+                        window.location.reload();
+
+                    }
+                    else{
+                        alert(resData.resultMsg);
+                    }
+                }
+            }
+        );
+
+        //document.getElementById(id).remove();
+    }
+   
+</script>
+
+</body>
+</html>

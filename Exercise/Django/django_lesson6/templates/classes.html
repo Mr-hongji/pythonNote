@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% csrf_token %}
+<p>
+    <a href="add_class.html">添加班级</a>
+    <a href="ajaxAddClass.html">Ajax 添加班级</a>
+</p>
+<p>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>班级</th>
+            <th>老师</th>
+            <th>操作</th>
+        </tr>
+        <tbody>
+            {% for item in cls_list %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        {% for te in item.teacher.all %}
+                            {{ te.name }}
+                        {% endfor %}
+                    </td>
+                    <td><a href="dispatchteacher.html?classid={{ item.id }}">分配老师</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</p>
+
+</body>
+</html>

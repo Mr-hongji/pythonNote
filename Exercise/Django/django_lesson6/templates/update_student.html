@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="updateStudent?sid={{ stu.id }}" method="post">
+    {% csrf_token %}
+        <p>
+            name: <input type="text" name="sname" value="{{ stu.name }}"/>
+        </p>
+        <p>
+            gender:
+            {% if stu.gender %}
+                <input type="radio" name="gender" value="0"/>男
+                <input type="radio" name="gender" value="1" checked/>女
+            {% else %}
+                <input type="radio" name="gender" value="0" checked/>男
+                <input type="radio" name="gender" value="1"/>女
+            {% endif %}
+        </p>
+        <p>
+            age: <input type="text" name="age" value="{{ stu.age }}"/>
+        </p>
+        <p>
+            cls: <select name="cls">
+                    {% for item in cls_list %}
+                        {% if item.id == stu.c.id %}
+                            <option selected value="{{ item.id }}">{{ item.name }}</option>
+                        {% else %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+        </p>
+        <input type="submit" value="修改">
+    </form>
+</body>
+</html>
