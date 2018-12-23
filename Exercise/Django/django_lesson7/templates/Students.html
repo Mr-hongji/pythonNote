@@ -1,10 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<link>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap-theme.css"/>
+
+<style>
+   *{
+       padding: 5px;
+   }
+</style>
 </head>
 <body>
-$END$
+    <!-- class="container" 是页面居中样式 -->
+    <div class="container">
+        <div>
+            <button id="addBtn" type="button" class="btn btn-primary">添加</button>
+            <button id="delBtn" type="button" class="btn btn-danger">删除</button>
+        </div>
+        <div>
+             <table class="table table-bordered table-striped " id="dataTable">
+            <thead>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>班级</th>
+                <th>操作</th>
+            </thead>
+             {% for stu in stu_list %}
+                 <tr id="{{ stu.id }}">
+                    <td tname="stuId">{{ stu.id }}</td>
+                    <td tname="stuName">{{ stu.name }}</td>
+                    <td tname="stuAge">{{ stu.age }}</td>
+                     {% if stu.gender %}
+                        <td tname="stuGender">女</td>
+                     {% else %}
+                         <td tname="stuGender">男</td>
+                     {% endif %}
+
+                    <td tname="stuCls">{{ stu.c.name }}</td>
+                    <td tname="btntd">
+                        <button class="glyphicon glyphicon-pencil editBtn" sid="{{ stu.id }}"></button>
+                        <!--
+                            刚开始使用 id='delStu' 如：<button class="glyphicon glyphicon-trash" id="delStu"></button>
+                            $('#delStu').click()
+                            结果只有第一条数据点击删除按钮的时候回弹出删除提示窗口
+
+                            原因：此处是一个循环的tr 中的 td 标签， 但是 id 在页面中是不可重复的，所以只有第一条数据的删除
+                            按钮绑定了点击事件
+
+
+                            修改：
+
+                                添加class = 'delBtn'
+                                $(".delBtn").click()
+
+                        -->
+                        <button class="glyphicon glyphicon-trash delBtn" sid="{{ stu.id }}"></button>
+                    </td>
+            </tr>
+             {% endfor %}
+        </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加学生</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" id="addStuForm">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">姓名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="stuName" placeholder="姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">年龄：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="stuAge" placeholder="年龄">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">性别：</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="stuGender" value="false" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="stuGender" value="true"> 女
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">班级：</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="stuCls">
+                                {% for cls in cls_list %}
+                                    <option value="{{ cls.id }}">{{ cls.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <span id="msgTip" style="color: red"></span>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancleAdd">取消</button>
+            <button type="button" class="btn btn-primary" id="saveBtn">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-danger" role="alert">
+                <p><h3>确认删除？</h3></p>
+                <div style="height: 50px;">
+                    <div style="float: right">
+                        <span style="color: red" id="delStudentMsgTip"></span>
+                        <!-- Standard button -->
+                        <button type="button" class="btn btn-default" id="cancleDel">取消</button>
+                        <button type="button" class="btn btn-danger" id="confirmDel">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(function () {
+        bindingAdd();
+        bindingCancleAdd();
+        bindingSave();
+        bindingDel();
+        bindingCancleDel();
+        bindingConfirmDel();
+        bindingEdit();
+    })
+
+    function bindingEdit(){
+        $('.editBtn').click(function () {
+            $("#saveBtn").text('修改');
+
+            var sid = $(this).attr('sid');
+            console.log(sid);
+            $('tr[id=' + sid + ']').find('td').each(function () {
+                console.log($(this).text())
+
+                var tname = $(this).attr("tname");
+                if(tname == 'stuName'){
+
+                    $('#addStuForm').find('input[name=' + tname + ']').val($(this).text());
+
+                }else if(tname == 'stuAge'){
+
+                    $('#addStuForm').find('input[name=' + tname + ']').val($(this).text());
+
+                }else if(tname == 'stuGender'){
+
+                    var gen = 1;
+                    console.log($(this).text() + '.................');
+                    if($(this).text() == '男'){
+                        gen = 0;
+                    }
+                    //console.log($('#addStuForm').find('input[name=' + tname + ']')[gen])
+
+                    $('#addStuForm').find('input[name=' + tname + ']')[gen].checked = true;
+
+                }else if(tname == 'stuCls'){
+
+                    var clsname = $(this).text();
+
+                    //循环找出from表单中的option然后循环
+                    $('#addStuForm').find('option').each(function () {
+
+                        //判断option的text是否等于要编辑行的班级名称
+                        if($(this).text() == clsname){
+
+                            console.log($(this).attr('value'));
+                            //取出符合条件的option中的value值
+                            var opv = $(this).attr('value');
+
+                            //设置select中option的value=opv的选项并设置选中
+                            $("select[name=stuCls]").find('option[value='+opv+']').attr("selected",true);
+                        }
+                    });
+
+                }
+            })
+
+            $('#saveModal').modal('show');
+        });
+    }
+
+    function bindingAdd(){
+        $('#addBtn').click(function () {
+            $("#saveBtn").text('保存');
+            $('#saveModal').modal('show');
+        })
+    }
+
+    function bindingCancleAdd(){
+        $('#cancleAdd').click(function () {
+            $('#saveModal').modal('hide');
+        })
+    }
+    
+    function bindingSave(){
+
+        $('#saveBtn').click(function () {
+
+             var stuData = {};
+
+            //查找表单中的 input 和 select元素并循环
+            $('#addStuForm').find('input, select').each(function () {
+
+                console.log(this);
+
+                var v = $(this).val();
+                //返回元素属性的值
+                //返回name属性的值
+                var n = $(this).attr('name');
+
+                if(n == 'stuGender'){
+                    //返回checked属性的值
+                     /*
+                        返回属性的值有两种方式：
+                        方式一：
+                            使用attr('checked)   返回值： checked / undefined
+                        方式二：
+                            使用prop（'checked'） 返回值：false / true
+
+                        使用prop还可以设置属性值：
+
+                            prop('name', 'stuName') 设置属性 name 的值为 stuName
+                    */
+
+                     if($(this).prop('checked')){
+                        stuData[n] = v;
+                    }
+                }else{
+                    stuData[n] = v;
+                }
+
+            })
+
+        console.log(stuData);
+
+            $.ajax(
+                {
+                    url:'addStudent',
+                    type:'POST',
+                    data:stuData,
+                    success:function (arg) {
+                        console.log(arg);
+                        var res = JSON.parse(arg);
+                        console.log(res.status)
+                        if(res.status){
+
+                            //数据保存成功后更新页面数据
+
+                            // 方式一：使用js添加一行数据
+                             createTr(stuData, res.stuid);
+
+                             // 方式二： 重新加载页面
+                            //window.location.reload();
+
+                            $('#saveModal').modal('hide');
+                        }else{
+                            $('#msgTip').text(res.msg);
+                        }
+                    }
+                }
+            );
+        })
+    }
+
+    function createTr(studata, stuid){
+        var gender = '男';
+
+        if(studata.stuGender == 'true'){
+            gender = '女'
+        }
+
+        //获取当前选中的下拉框选项的文本
+        var claname = $('select[name="stuCls"]').find('option[value="'+ studata.stuCls +'"]').text();
+
+
+        var trStr = '' +
+            '<tr>' +
+            '<td>' + stuid + '</td>' +
+            '<td>' + studata.stuName + '</td>' +
+            '<td>' + studata.stuAge + '</td>' +
+            '<td>' + gender + '</td>' +
+            '<td>' + claname +'</td>' +
+            '<td><button class="glyphicon glyphicon-pencil"></button> <button class="glyphicon glyphicon-trash"></button></td>' +
+            '</tr>';
+
+        $('#dataTable').append(trStr);
+    }
+    
+     var stid;
+    function bindingDel(){
+        $('.delBtn').click(function () {
+            $('#delModal').modal('show');
+            stid = null;
+            stid = $(this).attr('sid');
+            console.log(stid)
+        });
+    }
+
+    function  bindingCancleDel(){
+        $('#cancleDel').click(function () {
+            $('#delModal').modal('hide');
+        });
+    }
+
+    function  bindingConfirmDel(){
+        $('#confirmDel').click(function () {
+            $.ajax({
+                url:'delStudent',
+                type: 'POST',
+                data:{id:stid},
+                success:function (arg) {
+                    var resdata = JSON.parse(arg);
+
+                    if(resdata.status) {
+                         $('#delModal').modal('hide');
+                         //window.location.reload();
+
+                        $('tr[id="'+ stid+'"]').remove(); //或使用  document.getElementById(stid).remove();
+
+                    }else{
+                        $("#delStudentMsgTip").text(resdata.msg);
+                    }
+                }
+            })
+        });
+    }
+</script>
 </body>
 </html>
