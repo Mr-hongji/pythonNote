@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <ul>
+        {% for item in itemList %}
+           <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="index.html?page={{ pre_page }}">上一页</a>
+        {% for n in page_nums %}
+            {% if n == current_page %}
+                <a href="index.html?page={{ n }}" style="font-size: 24px">{{ n }}</a>
+            {% else %}
+                <a href="index.html?page={{ n }}" >{{ n }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <a href="index.html?page={{ next_page }}">下一页</a>
+                &nbsp;{{ current_page }} / {{ pageCount }}
+    </p>
+
+</body>
+</html>

@@ -149,13 +149,16 @@
         bindingCancleDel();
         bindingConfirmDel();
         bindingEdit();
+
     })
-
+var stid;
     function bindingEdit(){
-        $('.editBtn').click(function () {
-            $("#saveBtn").text('修改');
+        $('#dataTable').on('click', '.editBtn', function(event){
 
+            $("#saveBtn").text('修改');
+            stid = null;
             var sid = $(this).attr('sid');
+            stid = sid;
             console.log(sid);
             $('tr[id=' + sid + ']').find('td').each(function () {
                 console.log($(this).text())
@@ -205,6 +208,7 @@
             $('#saveModal').modal('show');
         });
     }
+
 
     function bindingAdd(){
         $('#addBtn').click(function () {
@@ -260,11 +264,50 @@
 
         console.log(stuData);
 
-            $.ajax(
+        if($('#saveBtn').text() == '修改'){
+            stuData['id'] = stid;
+           $.ajax(
+                {
+                    url:'editStudent',
+                    type:'POST',
+                    data:stuData,
+                    success:function (arg) {
+                        console.log(arg);
+                        var res = JSON.parse(arg);
+                        console.log(res.status)
+                        if(res.status){
+
+                            window.location.reload();
+
+                            $('#saveModal').modal('hide');
+                        }else{
+                            $('#msgTip').text(res.msg);
+                        }
+                    }
+                }
+            );
+
+        }else{
+              $.ajax(
                 {
                     url:'addStudent',
                     type:'POST',
                     data:stuData,
+
+                    /*
+                    *   dataType:'json',
+                    *
+                    * 添加这个参数后，在成功回调函数中就不用使用 JSON.parse(arg) 把json串转成对象
+                    * 参数 arg 传过来直接就是对象
+                    * */
+
+                    /*
+                     *  traditional: true,
+                     *
+                     *  添加这个参数后，data 的数据中的 键值可以为列表： {id：[1, 2, 3], name: 'abc'}
+                      **/
+
+
                     success:function (arg) {
                         console.log(arg);
                         var res = JSON.parse(arg);
@@ -286,6 +329,8 @@
                     }
                 }
             );
+        }
+
         })
     }
 
@@ -301,26 +346,28 @@
 
 
         var trStr = '' +
-            '<tr>' +
+            '<tr id="' + stuid + '">' +
             '<td>' + stuid + '</td>' +
             '<td>' + studata.stuName + '</td>' +
             '<td>' + studata.stuAge + '</td>' +
             '<td>' + gender + '</td>' +
             '<td>' + claname +'</td>' +
-            '<td><button class="glyphicon glyphicon-pencil"></button> <button class="glyphicon glyphicon-trash"></button></td>' +
+            '<td><button class="glyphicon glyphicon-pencil editBtn" sid="'+ stuid +'"></button> ' +
+            '<button class="glyphicon glyphicon-trash delBtn" sid="'+ stuid +'"></button></td>' +
             '</tr>';
 
         $('#dataTable').append(trStr);
     }
     
-     var stid;
+
     function bindingDel(){
-        $('.delBtn').click(function () {
-            $('#delModal').modal('show');
+         $('#dataTable').on('click', '.delBtn', function(){
+             $('#delModal').modal('show');
             stid = null;
             stid = $(this).attr('sid');
             console.log(stid)
-        });
+         });
+
     }
 
     function  bindingCancleDel(){
@@ -330,6 +377,7 @@
     }
 
     function  bindingConfirmDel(){
+
         $('#confirmDel').click(function () {
             $.ajax({
                 url:'delStudent',
@@ -351,6 +399,22 @@
             })
         });
     }
+
+
+
+    /*
+    * 事件委托：
+    *
+    *        数据添加成功使用 JS 添加行，会导致新添加的行中的编辑和删除按钮无法绑定事件
+    *
+    *        所以可以使用事件委托的方式给 table 绑定事件委托 ，当鼠标点击table时，在给编辑或删除按钮绑定事件，并且执行该事件：
+    *
+    *        事件委托：
+    *
+    *         给table绑定委托，当table中的 编辑按钮点击时，给editBtn，绑定click事件，并且执行click事件
+    *        $('#table').on('click', 'editBtn', function(){})
+    *
+    */
 </script>
 </body>
 </html>

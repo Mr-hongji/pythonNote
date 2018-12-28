@@ -49,3 +49,32 @@ def delStudent(request):
 
     resdata = json.dumps(res, ensure_ascii=False)
     return HttpResponse(resdata)
+
+
+def editStudent(request):
+    res = {'status': False, 'msg': None}
+
+    try:
+        id = request.POST.get('id')
+        name = request.POST.get('stuName')
+        age = request.POST.get('stuAge')
+        gender = request.POST.get('stuGender')
+        cls = request.POST.get('stuCls')
+
+        if gender == 'false':
+            gender = False
+        else:
+            gender = True
+
+        stu = Students.objects.filter(id=id).update(name=name, age=age, gender=gender, c_id=cls)
+        print(name)
+        res['status'] = True
+
+        res['stuid'] = stu.id
+
+    except Exception as e:
+        res['msg'] = '修改失败'
+
+    resdata = json.dumps(res, ensure_ascii=False)
+    print(resdata)
+    return HttpResponse(resdata)
