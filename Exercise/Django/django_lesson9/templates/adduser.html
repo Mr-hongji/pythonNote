@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form action="add_user" method="post">
+        {% csrf_token %}
+        <p ><input name="uname" ></p>
+        <p><input name="upwd" ></p>
+        <p><input name="age" ></p>
+        <p><input name="email"></p>
+        <input type="submit">
+    </form>
+
+</body>
+
+</html>

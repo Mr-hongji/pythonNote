@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><a href="adduser.html">添加</a></p>
+<ul>
+    {% for user in user_list %}
+        <li>{{ user.id }} - {{ user.uname }} - {{ user.upwd }} - {{ user.age }} - {{ user.email }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
