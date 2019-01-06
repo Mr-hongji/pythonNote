@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users.html$', users),
     url(r'^adduser.html$', adduserpage),
-    url(r'^add_user$', add_user)
+    url(r'^add_user$', add_user),
 
 ]
 

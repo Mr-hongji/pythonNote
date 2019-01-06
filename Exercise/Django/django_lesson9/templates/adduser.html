@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .errorspan{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-    <form action="add_user" method="post">
+<form action="add_user" method="post" novalidate>
         {% csrf_token %}
-        <p ><input name="uname" ></p>
-        <p><input name="upwd" ></p>
-        <p><input name="age" ></p>
-        <p><input name="email"></p>
+        <p >{{ f.uname.label}}: {{ f.uname}} <span class="errorspan">{{ f.errors.uname.0 }}</span></p>
+        <p> {{ f.upwd }} <span class="errorspan">{{ f.errors.upwd.0}}</span> </p>
+        <p>{{ f.age }} <span class="errorspan">{{ f.errors.age.0 }}</span> </p>
+        <p>{{ f.email }} <span class="errorspan">{{ f.errors.email.0 }}</span></p>
+        <p>{{ f.gender }}</p>
+        <p>{{ f.fileinput }}</p>
         <input type="submit">
-    </form>
+</form>
 
 </body>
 
