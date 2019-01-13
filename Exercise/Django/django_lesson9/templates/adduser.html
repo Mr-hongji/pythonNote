@@ -7,19 +7,31 @@
         .errorspan{
             color: red;
         }
+
+        ul{
+            list-style-type: none;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        li{
+            float: left;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 
-<form action="add_user" method="post" novalidate>
-        {% csrf_token %}
-        <p >{{ f.uname.label}}: {{ f.uname}} <span class="errorspan">{{ f.errors.uname.0 }}</span></p>
-        <p> {{ f.upwd }} <span class="errorspan">{{ f.errors.upwd.0}}</span> </p>
-        <p>{{ f.age }} <span class="errorspan">{{ f.errors.age.0 }}</span> </p>
-        <p>{{ f.email }} <span class="errorspan">{{ f.errors.email.0 }}</span></p>
-        <p>{{ f.gender }}</p>
-        <p>{{ f.fileinput }}</p>
-        <input type="submit">
+<form action="add_user" method="post" novalidate enctype="multipart/form-data">
+    {% csrf_token %}
+    <p >{{ f.uname.label}}{{ f.label_suffix }} {{ f.uname}} <span class="errorspan">{{ f.errors.uname.0 }}</span><span>{{ f.uname.field.help_text }}</span></p>
+    <p>{{ f.upwd.label}}{{ f.upwd.field.label_suffix }} {{ f.upwd }} <span class="errorspan">{{ f.errors.upwd.0}}</span> </p>
+    <p>{{ f.age }} <span class="errorspan">{{ f.errors.age.0 }}</span> </p>
+    <p>{{ f.email }} <span class="errorspan">{{ f.errors.email.0 }}</span></p>
+    <p>{{ f.gender }}</p>
+    <p>{{ f.getMarried }}</p>
+    <p>{{ f.fileinput }}</p>
+    <input type="submit">
 </form>
 
 </body>
