@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.js"></script>
+</head>
+<body>
+
+    <p>{{ f.uname }}{{ f.errors.uname }}</p>
+    <p>{{ f.upwd }}{{ f.errors.upwd }}</p>
+    <p>{{ f.age }}{{ f.errors.age }}</p>
+    <p>{{ f.email }}{{ f.errors.email }}</p>
+
+    <button id="adduserBtn" >添加</button>
+
+<script>
+    $(function () {
+        adduser();
+    })
+
+    function adduser(){
+        $('#adduserBtn').click(
+             function () {
+                 $.ajax(
+                    {
+                        url:'adduser_ajax.html',
+                        data:$('#uform').serialize(),
+                        type:'Post',
+                        dataType:'json',
+                        success:function(arg){
+                            console.log(arg);
+                        }
+                    }
+                 )
+             }
+        );
+
+    }
+</script>
+</body>
+</html>

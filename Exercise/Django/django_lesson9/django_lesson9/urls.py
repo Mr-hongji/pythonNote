@@ -16,13 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 
 from django.contrib import admin
-from app01.views import users, adduserpage, add_user
+from app01.views import users, adduserpage, add_user, adduser_ajax
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users.html$', users),
     url(r'^adduser.html$', adduserpage),
     url(r'^add_user$', add_user),
+    url(r'^adduser_ajax.html$', adduser_ajax),
 
 ]
 

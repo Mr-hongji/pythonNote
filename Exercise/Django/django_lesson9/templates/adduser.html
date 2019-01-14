@@ -22,6 +22,11 @@
 </head>
 <body>
 
+<!--
+    上传文件时 需要在 form 中添加 enctype="multipart/form-data" 属性
+
+    在上传文件的时候，要求request.method必须为POST
+-->
 <form action="add_user" method="post" novalidate enctype="multipart/form-data">
     {% csrf_token %}
     <p >{{ f.uname.label}}{{ f.label_suffix }} {{ f.uname}} <span class="errorspan">{{ f.errors.uname.0 }}</span><span>{{ f.uname.field.help_text }}</span></p>
@@ -31,6 +36,9 @@
     <p>{{ f.gender }}</p>
     <p>{{ f.getMarried }}</p>
     <p>{{ f.fileinput }}</p>
+    <p>{{ f.users1}}</p>
+    <p>{{ f.users2 }}</p>
+    <p>{{ f.users3 }}</p>
     <input type="submit">
 </form>
 
