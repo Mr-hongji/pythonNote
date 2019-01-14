@@ -1,0 +1,6 @@
+内置 Form
+    Form 中内置了各种字段类型，方便做输入验证，生成页面元素
+
+    form 内置字段练习（动态 select、 widget插件等）
+
+    form 验证 form.is_valid() 中验证接口预留的 使用验证扩展方法： clean_属性名()、 clean() 对比数据表信息做数据验证

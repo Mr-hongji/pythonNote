@@ -68,7 +68,7 @@ def add_user(request):
 
 
 import json
-
+from django.forms.utils import ErrorDict
 
 def adduser_ajax(request):
 
@@ -92,12 +92,12 @@ def adduser_ajax(request):
                  的方法
             
             '''
-            print(f.errors.as_ul())
-            print(f.errors.as_data())
-            print(f.errors.as_json())
-            print(f.errors.as_text())
+            # print(f.errors.as_ul())
+            # print(f.errors.as_data())
+            # print(f.errors.as_json())
+            # print(f.errors.as_text())
 
-            from django.forms.utils import ErrorDict
+
 
             ret['message'] = f.errors
 

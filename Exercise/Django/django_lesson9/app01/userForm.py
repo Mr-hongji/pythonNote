@@ -113,15 +113,12 @@ class myform(Form):
 
         self.fields['users3'].widget.choices =  userInfo.objects.all().values_list('id','uname')
 
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
 class ajaxform(forms.Form):
-    uname = fields.CharField(max_length=20,
-                             min_length=5,
-                             required=True,
+    uname = fields.CharField(required=True,
                              label='用户名',
                              error_messages={
-                                 'max_length': '用户名为 5-20个字符',
-                                 'min_length': '用户名为 5-20个字符',
                                  'required': '用户名不能为空',
                                  'invalid': '用户名格式错误'
                              },
@@ -131,4 +128,48 @@ class ajaxform(forms.Form):
     age = fields.IntegerField(max_value=120, min_value=0, required=True)
     email = fields.EmailField(required=True)
 
-    def
+
+    '''
+     form Filed只能对输入的值做正则验证， 如果需要验证 用户名是否已存在等问题，需要从表中查询，
+     如果存在就添加报错信息， Form.is_valid(): 在做字段验证的时候预留了一个验证扩展，方法名是： clean_字段名，
+     
+     如： 
+        uname = fields.CharField() 字段
+         方法名就是：
+         
+         clean_uname()
+    
+    Form 在做完正则验证后会调用此方法做验证
+    
+        def clean_uname(self):
+            u = self.cleaned_data['uname']
+    
+            if userInfo.objects.filter(uname=u).count():
+                raise ValidationError('用户名已存在')
+    
+            return u
+        
+    '''
+
+
+    '''
+    
+    当我们要一次检查多个字段的时候，比如：用户名和邮箱都不能重复，多个验证显示一个错误
+    
+    再用‘clean_用户名()’这种方式一个字段一个字段的验证是不行的
+    
+    这时候可以用 Form 预留出来的 clean() 方法
+    
+    '''
+    def clean(self):
+        u = self.cleaned_data['uname']
+        e = self.cleaned_data['email']
+
+        if userInfo.objects.filter(uname=u).count() or userInfo.objects.filter(email=e).count():
+            raise ValidationError('用户信息输入错误')
+
+        return self.cleaned_data
+
+
+
+

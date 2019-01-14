@@ -7,12 +7,17 @@
 </head>
 <body>
 
-    <p>{{ f.uname }}{{ f.errors.uname }}</p>
-    <p>{{ f.upwd }}{{ f.errors.upwd }}</p>
-    <p>{{ f.age }}{{ f.errors.age }}</p>
-    <p>{{ f.email }}{{ f.errors.email }}</p>
+    <form id="uform" action="adduser_ajax.html" method="post">
 
-    <button id="adduserBtn" >添加</button>
+        <p>{{ f.uname }}{{ f.errors.uname }}</p>
+        <p>{{ f.upwd }}{{ f.errors.upwd }}</p>
+        <p>{{ f.age }}{{ f.errors.age }}</p>
+        <p>{{ f.email }}{{ f.errors.email }}</p>
+
+        <input type="button" id="adduserBtn" value="提交">
+
+    </form>
+
 
 <script>
     $(function () {
