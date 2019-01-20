@@ -1,0 +1,116 @@
+n内容：
+
+    文件上传：
+
+        上传的文件 在views 中 存在request.Files
+
+       uf =  requeat.Files.get('uploadFile')
+
+       f = open(uf.name, 'wb')
+
+       # f.chunks()分多次取数据，并写到本地
+       for line in f.chunks():
+            f.write(line)
+       f.close()
+
+
+
+    ManayToManay手动创建第三张表：
+
+        创建的第三张表实际就是其它两张表的外键
+
+        Class User(models.Model):
+            uname = models.Charfield()
+
+        Class Hobby(models.Model):
+            name = models.CharField()
+
+        '''
+        ManayToManay 的时候手动生成第三张表
+
+        优点：
+
+            使用Django自动生成的第三张表中只有三列：id 和 另外两张表的id,
+            使用自己手动生成的第三张表，可以添加其它列
+
+        '''
+
+        class UserToHobby(Model):
+            user = models.ForeignKey(to='User')
+            hobby = models.ForeignKey(to='Hobby')
+            ctime = models.TimeField()
+
+            '''
+            两者联合唯一：
+
+            比如：一个人不能有两个相同的爱好
+            '''
+
+            class Meta():
+                unique_together = [
+                    ('user', 'hobby'),
+                ]
+
+
+    '''
+    select_related()、prefetch_related()
+
+    相同：
+        两个方法都会在插叙表的时候连带关联表单数据一起查询出来
+        比如：User表中有部门表的外键，在查询的时候就会把这个用户所在的部门信息一起查询出来
+        这个两个方法只在需要使用外键关联表的信息时使用，可以减少数据库查询次数
+
+    不同：
+        select_related()：是关联表查询只执行一次Sql
+        prefetch_related()：是先查询User表，然后使用 in [uid, uid]的方式查询外键关联表，会执行两条sql语句
+    '''
+    User.objects.all().select_related()
+    User.objects.all().prefetch_related()
+
+
+    '''
+    raw()
+
+    可以执行原生sql语句
+    '''
+    UserToHobby.objects.all().raw('sql语句')
+
+
+    '''
+    only()
+
+    只查询某一列数据
+
+    同value() 的区别：
+
+        only：查询结果是：[obj, obj, obj], 同all() 一样
+
+        value：查询结果是：[{},{},{}]
+    '''
+
+    User.objects.only('uname')
+
+
+
+    admin 注册：
+
+        admin.site.register(models.User)
+        admin.site.tegister(models.Hobby)
+        admin.site.tegister(models.UserToHobby)
+
+
+     admin 创建superuser：
+
+        Python manage.py createsupseruser
+
+
+Django——报错：admin后台添加中文数据时报错:
+
+        UnicodeEncodeError: 'ascii' codec can't encode characters in position..
+
+解决： 在app下的admin.py 文件中添加：
+
+import sys;
+reload(sys);
+sys.setdefaultencoding("utf8")
+
