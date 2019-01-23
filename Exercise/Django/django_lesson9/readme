@@ -4,3 +4,7 @@
     form 内置字段练习（动态 select、 widget插件等）
 
     form 验证 form.is_valid() 中验证接口预留的 使用验证扩展方法： clean_属性名()、 clean() 对比数据表信息做数据验证
+
+
+使用Djanform 在页面中使用form表单做数据提交验证
+使用Djanform 在页面中使用Ajax做数据提交验证
