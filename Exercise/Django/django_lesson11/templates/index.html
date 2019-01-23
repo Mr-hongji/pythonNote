@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.js"></script>
+</head>
+<body>
+
+<p><a onclick="ajax_get();"> ajax_get()  </a></p>
+<p><a onclick="ajax_post();"> ajax_post()  </a></p>
+
+
+<p><a onclick="xmlhttprequest_get();">xmlhttprequest_get()</a></p>
+<p><a onclick="xmlhttprequest_post();">xmlhttprequest_post()</a></p>
+
+
+<input id="imgFile" type="file">
+<!-- formdata 使用 ：使用ajax中的 data参数不能够做文件上传， formdata对象可以封装文件上传-->
+<p><a onclick="ajax_post_formdata();"> ajax_post_formdata()  </a></p>
+
+<p><a onclick="xmlhttprequest_post_formdata();">xmlhttprequest_post_formdata()</a></p>
+
+
+<!-- 使用 iframe 和 form 伪造ajax请求-->
+<iframe id="f" name="ifr" ></iframe>
+
+<form id="fm" action="sendata" method="get" target="ifr">
+    <input type="text" name="uname">
+    <a onclick="iframe_form_get();">iframe_form_get()</a>
+</form>
+
+
+<input id="img1" type="file" onchange="uploadFile();">
+<img id="yulan" style="width: 180px;height: 200px">
+
+<script>
+
+    function uploadFile(){
+         var fd = new FormData();
+        // 获取选择的上传文件
+        fd.append('img', document.getElementById('img1').files[0]);
+
+         $.ajax({
+            url: 'uploadfile',
+            type:'post',
+            data:fd,
+            success:function (arg) {
+                console.log(arg);
+                document.getElementById('yulan').src = arg;
+            },
+
+             // 使用 formdata的时候需要添加这两个参数，
+             processData:false,
+             contentType:false
+        })
+    }
+
+    function ajax_get(){
+        $.ajax({
+            url: 'sendata',
+            type:'get',
+            data:{u:'123'},
+            success:function (arg) {
+                console.log(arg);
+            }
+        })
+    }
+
+    function ajax_post(){
+        $.ajax({
+            url: 'sendata',
+            type:'post',
+            data:{u:'123'},
+            success:function (arg) {
+                console.log(arg);
+            }
+        })
+    }
+
+    function ajax_post_formdata(){
+        var fd = new FormData();
+        fd.append('p', 123);
+        fd.append('q', 456);
+
+        // 获取选择的上传文件
+        fd.append('img', document.getElementById('imgFile').files[0]);
+
+
+         $.ajax({
+            url: 'uploadfile',
+            type:'post',
+            data:fd,
+            success:function (arg) {
+                console.log(arg);
+            },
+
+             // 使用 formdata的时候需要添加这两个参数，
+             processData:false,
+             contentType:false
+        })
+    }
+
+    function xmlhttprequest_get(){
+        var xhr = new XMLHttpRequest();
+
+        //XMLHttpRequest 的回调函数
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                console.log(xhr.responseText);
+            }
+        }
+
+        xhr.open('get', 'sendata?name=456');
+        xhr.send(null);
+    }
+
+     function xmlhttprequest_post(){
+        var xhr = new XMLHttpRequest();
+
+        //XMLHttpRequest 的回调函数
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                console.log(xhr.responseText);
+            }
+        }
+
+        xhr.open('post', 'sendata');
+
+        //在使用post的时候数据可以发送出去，但是值存在于 request.body中，没有被提取到 request.POST中
+         // 使用 ajax的 post 方式发送数据的时候， ajax内部设置了请求头，所以不会有问题
+         // 使用原生的 xmlhtttprequest 的 post方式，需要设置如下请求头
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
+        xhr.send('p=1&q=2&w=9');
+    }
+
+    function xmlhttprequest_post_formdata(){
+
+        var fd = new FormData();
+        fd.append('a', 4567);
+        fd.append('q', 784);
+        // 获取选择的上传文件
+        fd.append('img', document.getElementById('imgFile').files[0]);
+
+        var xhr = new XMLHttpRequest();
+
+        //XMLHttpRequest 的回调函数
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                console.log(xhr.responseText);
+            }
+        }
+
+        xhr.open('post', 'uploadfile');
+        xhr.send(fd);
+    }
+
+    function iframe_form_get(){
+        document.getElementById('f').onload = iframeloaded;
+        document.getElementById('fm').submit();
+    }
+
+    function iframeloaded(){
+        // 取出后台返回到 iframe 中的内容
+        console.log(this.contentWindow.document.body.innerHTML);
+    }
+
+</script>
+</body>
+</html>

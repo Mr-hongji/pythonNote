@@ -1,0 +1,68 @@
+Ajax使用：
+        jQuery封装的 $.ajax({})
+        原生的 XMLHttprequest
+
+伪 Ajax(IFrame + Form 伪造 Ajax方式发送请求)
+
+FormData的使用（jquery封装的ajax + 原生XMLHttprequest）：
+
+    使用ajax发送请求的时候，data参数只能是简单的数据，不能上传文件，使用 FormData 对象上传文件
+
+    XMLHttprequest:
+        https://segmentfault.com/a/1190000004322487
+        http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html
+
+
+解决跨域访问问题：
+    浏览器存在跨域访问的限制，称为同源策略
+
+     JSONP 解决跨域访问：
+
+        JSONP 只能发送GET请求
+
+        原理：由于带有src属性的元素不存在跨域问题，比如 img、script、 iframe等元素，借用带有src属性的元素来做
+
+        如：
+
+          方式一：
+
+            function submitJsonp2() {
+                var tag = document.createElement('script');
+                tag.src = 'http://127.0.0.1:9000/xiaokai.html';
+                document.head.appendChild(tag);
+                document.head.removeChild(tag);
+            }
+
+            function func(arg) {
+                $('#content').html(arg);
+            }
+
+            py文件中：
+            def jsonp(request):
+                # 返回的数据中 func('123456') 会返回到 script的标签中，相当于：
+                # <script> func('123456')</script>  相当于是一个函数调用
+                # 所以要在HTML页面中增加一个 func函数
+                # 如：  function func(arg) { $('#content').html(arg); }
+                return HttpResponse('func('123456')');
+
+
+          方式二使用Ajax来做：
+
+            function submitJsonp4() {
+                $.ajax({
+                    url: 'http://127.0.0.1:9000/xiaokai.html',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    jsonp: 'callback',
+                    jsonpCallback: 'func'
+                })
+            }
+            function func(arg) {
+                console.log(arg);
+            }
+
+
+
+
+图片上传预览：
+    选择完图片就直接上传，上传完成之后预览图片
