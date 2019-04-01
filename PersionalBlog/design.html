@@ -131,25 +131,73 @@
             	text-align: center;
             	background: lightgray;
             	width: 90%;
+            	margin: 20px auto;
             }
-            
-            .articleClassify h3{
-
-            }
-            
             .articleClassify ul{
             	margin: 0px;
             	padding: 0px;
             	list-style: none;
             	background: white;
+            	width: 100%;
             }
             
             .articleClassify ul li{
             	margin: 0px;
-            	padding: 5px;
+            	padding: 0;
             	background: white;
+            	width: 100%;
             	font: 14px "微软雅黑";
-            	border-bottom: 1px dotted;
+            	border-bottom: 1px dashed #D3D3D3;
+            }
+            
+            
+            .articleClassify ul a,
+            .articleClassify ul a:active, 
+            .articleClassify ul a:link,
+            .articleClassify ul a:visited{
+            	width: 100%;
+            	display: block;
+            	padding: 5px 0;
+            	color: blue;	
+            	background: floralwhite;
+            }
+            
+            .articleClassify a:hover{
+            	color: #696969;
+            }
+            
+            .opration{
+            	text-align: center;
+            	margin-top: 70px;
+            }
+            
+            .opration p{
+            	width: 100px;
+            	border: 1px #FFFAF0 solid;
+            	margin: 5px auto;
+            	background: lightgrey;
+            }
+           
+            .opration a,
+            .opration a:active, 
+            .opration a:link,
+            .opration a:visited{
+            	width: 100%;
+            	display: block;
+            	color: blue;
+            }
+            
+            .article{
+            	padding-bottom: 5px;
+            	border-bottom: 1px #D3D3D3 dashed;
+            }
+            
+            .article h3{
+            	padding: 10px;
+            }
+            
+            .article p{
+            	padding-bottom: 5px;
             }
 		</style>
 	</head>
@@ -178,15 +226,48 @@
 					<div class="articleClassify">
 						<h3>分类</h3>
 						<ul>
-							<li>Python</li>
-							<li>Java</li>
-							<li>C#</li>
-							<li>Flex</li>
+							<li><a href="#">Python</a></li>
+							<li><a href="#">Java</a></li>
+							<li><a href="#">C#</a></li>
+							<li><a href="#">Flex</a></li>
 						</ul>
 					</div>
-					<div class="articleTag">标签</div>
+					<div class="articleTag articleClassify">
+						<h3>标签</h3>
+						<ul>
+							<li><a href="#">Python</a></li>
+							<li><a href="#">Java</a></li>
+							<li><a href="#">C#</a></li>
+							<li><a href="#">Flex</a></li>
+						</ul>
+					</div>
+					
+					<div class="opration">
+						<p><a href="#">添加分类</a></p>
+						<p><a href="#">添加标签</a></p>
+						<p><a href="#">添加文章</a></p>
+					</div>
 				</div>
-				<div class="rightContent"></div>
+				<div class="rightContent">
+					<div class="article">
+						<h3 class="articleTitle">
+							发到公司打工说过说过是否是
+						</h3>
+						<p class="articleSummery">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							发生的发生发生发发送发发大发生大发打算法
+						</p>
+						
+						<p>
+							<span>
+								2019-03-31
+							</span>
+							<span>
+							
+							</span>
+						</p>
+					</div>
+				</div>
 			</div>
 			
 			<div class="footer">
