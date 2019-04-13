@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="./static/css/index.css" />
+        <script src="./static/js/jquery.js"></script>
+         <script src="./static/js/index.js"></script>
+	</head>
+	<body>
+		<div class="banner">
+			<p class="loginInfo"> [<a href="#"> 登录</a> · <a href="#">注册 </a>]</p>
+			<p>代码改变世界</p>
+			<div class="logo">
+				<div class="banner_logo"></div>
+				<img class="banner_advertisement" src="./static/img/24442-20190221112234081-884838216.jpg"></img>
+			</div>
+		</div>
+		
+	<!-- nav -->
+	<div class="nav">
+		<ul>
+			<li><a href="#">园子</a></li>
+			<li><a href="#">新闻</a></li>
+			<li><a href="#">博文</a></li>
+			<li><a href="#">闪存</a></li>
+			<li><a href="#">小组</a></li>
+			<li><a href="#">收藏</a></li>
+			<li><a href="#">招聘</a></li>
+			<li><a href="#">班级</a></li>
+			<li><a href="#">找找看</a></li>
+		</ul>
+	</div>
+	
+	<div class="content clearFix">
+		
+		<!--left-->
+		<div class="leftDiv">
+			<div class="menu">
+				<div class="menu_title">
+					<p class="websiteClassification">
+						网站分类
+					</p>
+				</div>
+				<div class="menuList">
+				</div>
+			</div>
+		</div>
+		
+		<!--center-->
+		<div class="contentDiv">
+			<div class="contentNav clearFix">
+				<ul>
+					<li><a href="#" class="current_nav">首页</a></li>
+					<li><a href="#">新闻</a></li>
+					<li><a href="#">热点</a></li>
+				</ul>
+			</div>
+
+            {% for article in articles %}
+                <div class="articleDiv">
+                    <span class="upupnum">0</span>
+                    <div class="article">
+                        <p class="articleTitle">
+                            <a href="#">
+                                {{ article.title }}
+                            </a>
+                        </p>
+                        <div class="articleContent">
+                            <div class="userImage"></div>
+                            {{ article.summery }}
+                        </div>
+
+                        <div class="articleInfo">
+                            <a href="#">{{ article.uname }}</a>
+                            发布于 {{ article.createTime }}
+                            <span class="article_comment">
+                                <a href="#">评论(3)</a>
+                            </span>
+                            <span class="article_read">
+                                <a href="#">阅读(26)</a>
+                            </span>
+                        </div>
+
+                    </div>
+			    </div>
+			{% endfor %}
+
+            <div class="paginationDiv">
+               {{ paginatorResult }}
+            </div>
+
+		</div>
+		
+		<!--right-->
+		<div class="rightDiv">
+			<div class="recommend">
+				<p class="article_recommend">文章推荐</p>
+				<p class="recommend_title">13岁编程！少年比尔·盖茨如何成为最成功的自学成才程序...</p>
+				<p class="recommend_title">周鸿祎：360也是国家队</p>
+				<p class="recommend_title">红星照耀周鸿祎：企业要大步往前走，就得新陈代谢</p>
+				<p class="recommend_title">腾讯发起粤港澳青少年研学交流计划 面向大湾区中学</p>
+				<p class="recommend_title">红星照耀周鸿祎：企业要大步往前走，就得新陈代谢</p>
+				<p class="recommend_title">腾讯发起粤港澳青少年研学交流计划 面向大湾区中学</p>
+			</div>
+			<div class="commend_more">
+				<p class="commend_more_txt">文章推荐</p>
+				<p class="commend_more_recommend_title">13岁编程！少年比尔·盖茨如何成为最成功的自学成才程序...</p>
+				<p class="commend_more_recommend_title">周鸿祎：360也是国家队</p>
+				<p class="commend_more_recommend_title">红星照耀周鸿祎：企业要大步往前走，就得新陈代谢</p>
+				<p class="commend_more_recommend_title">腾讯发起粤港澳青少年研学交流计划 面向大湾区中学</p>
+				<p class="commend_more_recommend_title">红星照耀周鸿祎：企业要大步往前走，就得新陈代谢</p>
+				<p class="commend_more_recommend_title">腾讯发起粤港澳青少年研学交流计划 面向大湾区中学</p>
+			</div>
+		</div>
+		
+	</div>
+
+	</body>
+</html>

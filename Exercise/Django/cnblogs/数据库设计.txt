@@ -1,0 +1,23 @@
+
+用户表：uid uname pwd img
+
+博客表：bid title summery  uid(外键唯一)
+
+标签表：id name bid(外键)
+
+分类表：
+	用户自己的分类：id name bid(外键)
+	网站一级分类：ptypeid name
+	网站二级分类：id name ptypeid(外键唯一)
+
+	
+文章表：id title summery content bid(属于哪个博客外键唯一) 博客分类分类(外键) 网站分类（外键） 标签（MTM）发布时间 阅读数
+
+
+踩或赞：id uid（谁踩过） 文章id（踩过的文章id） 赞或踩（True 或 False）   因为一个用户对一篇文章赞完后就不能踩，踩过就不能赞所以 uid 和 文章id必须联合唯一
+
+评论表：id uid（谁评论的） 文章id（评论的哪篇文章） p_content_id(回复的谁)
+
+互粉：id uid uid   使用自关联
+
+报障表： id title content soureid(提交者id 关联user表) 处理者id（关联user表） status（处理状态，待处理、处理中、已处理） 创建时间 处理时间

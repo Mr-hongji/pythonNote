@@ -89,6 +89,8 @@ class myform(Form):
     # print(us)
     users3 = fields.ChoiceField()
 
+    users4 = fields.ChoiceField(widget=widgets.CheckboxSelectMultiple, choices=[(1, '看电影'), (2, 'yanghua')])
+
     fileinput = fields.FileField()
 
     '''
