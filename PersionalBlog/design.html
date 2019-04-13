@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0 auto;
+				padding: 0;
+			}
+			
+			.main{
+				width: 60%;
+				height: 1000px;
+				background: darkgray;
+				
+			}
+			
+			.banner{
+				width: 100%;
+				height: 159px;
+				background: yellowgreen;
+				border-top: 1px yellowgreen solid;
+			}
+			
+			.banner h1{
+				margin-top: 70px;
+				margin-left: 20px;
+			}
+			
+			.banner .chickenSoup{
+				padding-top: 15px;
+				padding-left: 20px;
+			}
+			
+			.nav{
+				width: 100%;
+				height: 35px;
+				background: black;
+			}
+			
+			.content{
+				width: 100%;
+				height: 800px;
+				background: black;
+				position: relative;
+			}
+			
+			.content .leftContent{
+				width: 250px;
+				height: 100%;
+				float: left;
+				background: cadetblue;
+			}
+			
+			.content .rightContent{
+				height: 100%;
+				position: absolute;
+				left: 250px;
+				right: 0;
+				background: cornflowerblue;
+				
+			}
+			
+			.footer{
+				height: 100px;
+				width: 100%;
+				background: dimgrey;
+			}
+			
+			.footer .Copyright{
+				padding-top: 10px;
+				padding-left: 5px;
+				font-family:arial;
+			}
+			
+			.nav ul{
+				color: white;
+				
+				list-style: none;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.nav ul li{
+				float: left;
+				height: 100%;
+				width: 100px;
+				/*background: #A9A9A9;*/
+				text-align: center;
+				font: 18px/35px "微软雅黑" bold;
+			}
+			
+			.nav ul li a{
+				text-decoration: none;
+				color: white;
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			
+			.nav ul li a:hover{
+				background: #696969;
+			}
+			
+			.nav ul li a:active{
+                background: lightgray;
+            }
+            
+            .calendar{
+            	width: 90%;
+            	height: 200px;
+            	margin: 20px auto;
+            	border: 1px black solid;
+            }
+            
+            .searchInput{
+            	text-align: center;
+            	width: 100%;
+            	margin: 20px auto;
+            }
+            
+            .searchInput input{
+            	width: 65%;
+            }
+            .searhBtn{
+            	width: 50px;
+            }
+            
+            .articleClassify{
+            	text-align: center;
+            	background: lightgray;
+            	width: 90%;
+            	margin: 20px auto;
+            }
+            .articleClassify ul{
+            	margin: 0px;
+            	padding: 0px;
+            	list-style: none;
+            	background: white;
+            	width: 100%;
+            }
+            
+            .articleClassify ul li{
+            	margin: 0px;
+            	padding: 0;
+            	background: white;
+            	width: 100%;
+            	font: 14px "微软雅黑";
+            	border-bottom: 1px dashed #D3D3D3;
+            }
+            
+            
+            .articleClassify ul a,
+            .articleClassify ul a:active, 
+            .articleClassify ul a:link,
+            .articleClassify ul a:visited{
+            	width: 100%;
+            	display: block;
+            	padding: 5px 0;
+            	color: blue;	
+            	background: floralwhite;
+            }
+            
+            .articleClassify a:hover{
+            	color: #696969;
+            }
+            
+            .opration{
+            	text-align: center;
+            	margin-top: 70px;
+            }
+            
+            .opration p{
+            	width: 100px;
+            	border: 1px #FFFAF0 solid;
+            	margin: 5px auto;
+            	background: lightgrey;
+            }
+           
+            .opration a,
+            .opration a:active, 
+            .opration a:link,
+            .opration a:visited{
+            	width: 100%;
+            	display: block;
+            	color: blue;
+            }
+            
+            .article{
+            	padding-bottom: 5px;
+            	border-bottom: 1px #D3D3D3 dashed;
+            }
+            
+            .article h3{
+            	padding: 10px;
+            }
+            
+            .article p{
+            	padding-bottom: 5px;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="banner">
+				
+				<h1>唠唠叨叨</h1>
+				<p class="chickenSoup">只要思想不滑坡，办法总比困难多</p>
+			</div>
+			<div class="nav">
+				<ul>
+					<li><a href="#">文章</a></li>
+					<li><a href="#">收藏</a></li>
+					<li><a href="#">文件下载</a></li>
+				</ul>
+			</div>
+			
+			<div class="content">
+				<div class="leftContent">
+					<div class="calendar">日历和时间</div>
+					<div class="searchInput">
+						<input placeholder="搜索框"/>
+						<button class="searhBtn">搜索</button>
+					</div>
+					<div class="articleClassify">
+						<h3>分类</h3>
+						<ul>
+							<li><a href="#">Python</a></li>
+							<li><a href="#">Java</a></li>
+							<li><a href="#">C#</a></li>
+							<li><a href="#">Flex</a></li>
+						</ul>
+					</div>
+					<div class="articleTag articleClassify">
+						<h3>标签</h3>
+						<ul>
+							<li><a href="#">Python</a></li>
+							<li><a href="#">Java</a></li>
+							<li><a href="#">C#</a></li>
+							<li><a href="#">Flex</a></li>
+						</ul>
+					</div>
+					
+					<div class="opration">
+						<p><a href="#">添加分类</a></p>
+						<p><a href="#">添加标签</a></p>
+						<p><a href="#">添加文章</a></p>
+					</div>
+				</div>
+				<div class="rightContent">
+					<div class="article">
+						<h3 class="articleTitle">
+							发到公司打工说过说过是否是
+						</h3>
+						<p class="articleSummery">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							发生的发生发生发发送发发大发生大发打算法
+						</p>
+						
+						<p>
+							<span>
+								2019-03-31
+							</span>
+							<span>
+							
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer">
+				<p class="Copyright">Copyright &copy;2019 &nbsp; www.xiaohong.com</p>
+				
+			</div>
+		</div>
+	</body>
+</html>
